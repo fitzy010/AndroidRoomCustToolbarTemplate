@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Testing New Repo Tracking Cant push bare repos bro
-     Will .gitignore work now or what?-->
+     Will .gitignore work now or what?
+     Made another clone to test -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ryan.appone">
