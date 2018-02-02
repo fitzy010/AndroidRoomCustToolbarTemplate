@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_history) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_home) {
 
         } else if (id == R.id.nav_manage) {
 
