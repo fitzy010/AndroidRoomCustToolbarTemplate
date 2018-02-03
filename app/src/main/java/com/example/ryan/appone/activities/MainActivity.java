@@ -1,9 +1,12 @@
 package com.example.ryan.appone.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,9 +18,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.ryan.appone.R;
+import com.example.ryan.appone.fragments.HistoryFragment;
+import com.example.ryan.appone.fragments.HomeFragment;
+import com.example.ryan.appone.fragments.TopMoversFragment;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, HomeFragment.OnFragmentInteractionListener,
+        HistoryFragment.OnFragmentInteractionListener, TopMoversFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +38,17 @@ public class MainActivity extends AppCompatActivity
          * Hide Title on ActionBar
          */
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        try {
+
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, new HomeFragment()).commit();
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -91,16 +111,13 @@ public class MainActivity extends AppCompatActivity
 
         // Top Movers Event handler start Activity
         if (id == R.id.nav_top_movers) {
-            Intent intent = new Intent(this, TopMovers.class);
-            startActivity(intent);
+            getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new TopMoversFragment()).commit();
 
         } else if (id == R.id.nav_history) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new HistoryFragment()).commit();
 
         } else if (id == R.id.nav_home) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.flContent, new HomeFragment()).commit();
 
         } else if (id == R.id.nav_manage) {
 
@@ -110,8 +127,16 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+
+        // Insert the fragment by replacing any existing fragmen
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

@@ -6,4 +6,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_fragment_history">Hello this is the HISTORY fragment</string>
+    <string name="hello_fragment_home">Hello this is the HOME fragment</string>
+    <string name="hello_fragment_topmovers">Hello this is the TOP MOVERS fragment</string>
 </resources>
