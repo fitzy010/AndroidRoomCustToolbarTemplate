@@ -7,6 +7,7 @@
         android:icon="@drawable/ic_search_black_24dp"
         android:menuCategory="secondary"
         android:title="@string/action_search"
+        android:onClick="searchEvent"
         app:showAsAction="always" />
 
     <item

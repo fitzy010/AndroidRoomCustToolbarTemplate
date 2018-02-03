@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ryan.appone.R;
 import com.example.ryan.appone.fragments.HistoryFragment;
@@ -32,8 +37,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         /**
          * Hide Title on ActionBar
          */
@@ -69,7 +75,31 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /**
+         * Set Listener for EditText enter pressed to call searchEvent()
+         */
+        EditText searchText = (EditText) findViewById(R.id.text_search);
+        searchText.setOnEditorActionListener(searchEnterListener);
     }
+
+    EditText.OnEditorActionListener searchEnterListener = new EditText.OnEditorActionListener() {
+
+        @Override
+        public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+            // actionId == EditorInfo.IME_NULL
+            if (actionId == EditorInfo.IME_ACTION_DONE
+                    || keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                    || actionId == EditorInfo.IME_ACTION_GO
+                    || actionId == EditorInfo.IME_ACTION_NEXT) {
+
+                EditText searchText = (EditText) findViewById(R.id.text_search);
+                String message = "You searched for " + searchText.getText().toString();
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+            }
+            return true;
+            }
+    };
 
     @Override
     public void onBackPressed() {
@@ -138,5 +168,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    /**
+     * Search Method for search menu item clicked
+     * @param item
+     */
+    public void searchEvent(MenuItem item) {
+        EditText searchText = (EditText) findViewById(R.id.text_search);
+
+        String message = "You searched for " + searchText.getText().toString();
+
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
     }
 }
